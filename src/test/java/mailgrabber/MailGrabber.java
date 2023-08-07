@@ -1,6 +1,5 @@
 package mailgrabber;
 
-import mailgrabber.model.TestData;
 import mailgrabber.pages.CustomerList;
 import mailgrabber.pages.CustomerPage;
 import mailgrabber.pages.HomePage;

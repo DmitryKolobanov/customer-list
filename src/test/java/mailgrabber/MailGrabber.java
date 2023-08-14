@@ -4,25 +4,23 @@ import mailgrabber.pages.CustomerList;
 import mailgrabber.pages.CustomerPage;
 import mailgrabber.pages.HomePage;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 
 public class MailGrabber {
 
     private  final String URL = "http://1182.lv/nozaru-katalogs";
-    private int CategoryIndex;
-    private int Category = 1;
+    private int SubCategoryIndex;
+    private int Category = 6;
     private int CustomerListIndex;
 
     private double PageCount;
     private String SubcategoryLink;
     private String SubcategoryName;
     private String CustomerMail;
-    private String FileName = "C:/QA/Auto.txt";
-//    private final By SUB_CATEGORY_LINK = By.xpath(".//div[@class= 'keyword-block']/ul/li/a");
-    private final By SUB_CATEGORY_LINK = By.xpath (".//div[@class = 'industry-cat']/ul/li/a");
-    private final By CUSTOMER_LINK = By.xpath(".//div[contains(@class, 'search-item')]");
-    private final By MAIL = By.xpath(".//span[@class = 'prop-email']/a");
+    private String FileName = "C:/QA/7_Business.txt";
+
     private final By NEXT_BUTTON = By.linkText("→");
     private BaseFunc baseFunc = new BaseFunc();
 
@@ -35,16 +33,13 @@ public class MailGrabber {
         HomePage homePage = new HomePage(baseFunc);
         homePage.selectCategory(Category);
 
-        CategoryIndex = baseFunc.findElements(SUB_CATEGORY_LINK).size();
-        System.out.println("Subcategory count: " + CategoryIndex);
-
         CustomerList customerList = new CustomerList(baseFunc);
         CustomerPage customerPage = new CustomerPage(baseFunc);
-        for (int i = 61; i < CategoryIndex; i++) {                      //Start position of subcategory
 
+        SubCategoryIndex = customerList.getSubcategoryIndex();
+        System.out.println("Subcategory count: " + SubCategoryIndex);
 
-//            SubcategoryLink = baseFunc.findElementFromList(SUB_CATEGORY_LINK).get(i).getAttribute("href");
-//            SubcategoryName = baseFunc.findElementFromList(SUB_CATEGORY_LINK).get(i).getText();
+        for (int i = 9; i < SubCategoryIndex; i++) {                      //Start position of subcategory
 
             SubcategoryLink = customerList.getSubcategoryLink(i);
             SubcategoryName = customerList.getSubcategoryName(i);
@@ -56,13 +51,14 @@ public class MailGrabber {
             PageCount = customerList.getCustomerCount();
             System.out.println("Page count: " + PageCount);
 
-            for (int k = 0; k<PageCount; k++) {
-                CustomerListIndex = baseFunc.findElements(CUSTOMER_LINK).size();
-                System.out.println("\nPage number: " + k);
-                for (int j = 0; j < CustomerListIndex; j++) {
+            for (int k = 0; k<PageCount; k++) {            //Start page of subcategory
+
+                CustomerListIndex = customerList.getCustomerListIndex();
+
+                System.out.println("\nPage number: " + k + " of " + PageCount);
+                for (int j = 0; j < CustomerListIndex; j++) {           //Start position on page
                     customerList.selectCustomer(j);
                     try {
-//                        CustomerMail = baseFunc.findElement(MAIL).getAttribute("href").substring(7);
                         CustomerMail = customerPage.getMail();
                         System.out.println(CustomerMail);
                         baseFunc.saveToFile(CustomerMail + "\n", FileName);
@@ -70,8 +66,6 @@ public class MailGrabber {
                         System.out.println("No e-mail found!");
                     }
                     baseFunc.stepBack();
-//                    baseFunc.waitForElementsCountToBe(CUSTOMER_LINK, CustomerListIndex);
-
                 }
                 try {
                     baseFunc.click(NEXT_BUTTON);

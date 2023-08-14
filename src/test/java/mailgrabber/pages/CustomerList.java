@@ -7,6 +7,7 @@ public class CustomerList {
 
     private final By CUSTOMER_SELECT = By.xpath(".//div[@class = 'si-img']");
     private final By CUSTOMER_TITLE = By.xpath(".//h2[@class = 'si-title']");
+    private final By CUSTOMER_LINK = By.xpath(".//div[contains(@class, 'search-item')]");
     private final By CUSTOMER_COUNT = By.xpath(".//div[@id ='toolbar']/div[@class = 'title']/span");
     private final By SUB_CATEGORY_LINK = By.xpath (".//div[@class = 'industry-cat']/ul/li/a");
     private BaseFunc baseFunc;
@@ -35,5 +36,11 @@ public class CustomerList {
         return baseFunc.findElementFromList(SUB_CATEGORY_LINK).get(i).getText();
     }
 
+    public int getSubcategoryIndex()    {
+        return baseFunc.findElements(SUB_CATEGORY_LINK).size();
+    }
 
+    public int getCustomerListIndex()   {
+        return baseFunc.findElements(CUSTOMER_LINK).size();
+    }
 }

@@ -12,14 +12,14 @@ public class MailGrabber {
 
     private  final String URL = "http://1182.lv/nozaru-katalogs";
     private int SubCategoryIndex;
-    private int Category = 6;
+    private int Category = 5;
     private int CustomerListIndex;
 
     private double PageCount;
     private String SubcategoryLink;
     private String SubcategoryName;
     private String CustomerMail;
-    private String FileName = "C:/QA/7_Business.txt";
+    private String FileName = "C:/QA/6_Home.txt";
 
     private final By NEXT_BUTTON = By.linkText("→");
     private BaseFunc baseFunc = new BaseFunc();
@@ -39,7 +39,7 @@ public class MailGrabber {
         SubCategoryIndex = customerList.getSubcategoryIndex();
         System.out.println("Subcategory count: " + SubCategoryIndex);
 
-        for (int i = 9; i < SubCategoryIndex; i++) {                      //Start position of subcategory
+        for (int i = 0; i < SubCategoryIndex; i++) {                      //Start position of subcategory
 
             SubcategoryLink = customerList.getSubcategoryLink(i);
             SubcategoryName = customerList.getSubcategoryName(i);

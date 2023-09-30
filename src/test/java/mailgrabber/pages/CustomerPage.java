@@ -12,7 +12,7 @@ public class CustomerPage {
         this.baseFunc = baseFunc;
     }
     public  String  getMail()   {
-        return baseFunc.findElement(MAIL).getAttribute("href").substring(7);
+        return baseFunc.findElementFast(MAIL).getAttribute("href").substring(7);
     }
 
 

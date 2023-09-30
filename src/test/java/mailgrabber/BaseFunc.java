@@ -19,6 +19,7 @@ import java.util.List;
 public class BaseFunc {
     private WebDriver browser;
     private WebDriverWait wait;
+    private WebDriverWait shortWait;
 
     public BaseFunc() {            //constructor
         System.setProperty("webdriver.chrome.driver", "C://QA2/chromedriver.exe");
@@ -29,6 +30,7 @@ public class BaseFunc {
         browser.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 
         wait = new WebDriverWait(browser, Duration.ofSeconds(10));
+        shortWait = new WebDriverWait(browser, Duration.ofSeconds(5));
     }
 
     public void openUrl(String url) {
@@ -78,6 +80,9 @@ public class BaseFunc {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
+    public WebElement findElementFast(By locator) {
+        return shortWait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
     public void hoverElement(By locator) {
         WebElement l = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
         Actions a = new Actions(browser);
